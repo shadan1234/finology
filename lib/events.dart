@@ -124,8 +124,14 @@ class EventsPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
-                            onPressed: () {},
-                            child: Text('Register Now'),
+                            onPressed: () {
+
+                            },
+                            child: Text('Register Now', 
+                              style: TextStyle(
+                                color: Colors.white
+                              ),     
+                            ),
                           ),
                         ),
                       ],
