@@ -12,6 +12,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController ageController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   String gender = "Male";
   String region = "Urban";
@@ -52,7 +53,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 setState(() => state = value!);
               }),
               buildTextField("Mobile Number", phoneController, isNumber: true),
-              buildTextField("Email", emailController),
+              buildTextField("Email", emailController, isEmail: true),
+              buildTextField("Password", passwordController, isPassword: true),
               SizedBox(height: 20),
               Center(
                 child: Column(
@@ -117,12 +119,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget buildTextField(String label, TextEditingController controller,
-      {bool isNumber = false}) {
+      {bool isNumber = false, bool isEmail = false, bool isPassword = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
         controller: controller,
-        keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+        keyboardType: isNumber
+            ? TextInputType.number
+            : isEmail
+                ? TextInputType.emailAddress
+                : TextInputType.text,
+        obscureText: isPassword,
         decoration: InputDecoration(
           labelText: label,
           border: OutlineInputBorder(),
@@ -130,6 +137,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Please enter $label';
+          }
+          if (isEmail && !RegExp(r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}\$').hasMatch(value)) {
+            return 'Please enter a valid email address';
+          }
+          if (isPassword && value.length < 6) {
+            return 'Password must be at least 6 characters';
           }
           return null;
         },

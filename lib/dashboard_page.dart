@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kali/ai-reco.dart';
+import 'package:kali/demographics.dart';
+import 'package:kali/events.dart';
 
 class DashboardScreen extends StatelessWidget {
   final String role; // Either "User" or "Admin"
@@ -45,9 +48,9 @@ class DashboardScreen extends StatelessWidget {
             // Content
             TabBarView(
               children: [
-                _buildDemographicsSection(),
-                _buildRecommenderSection(),
-                _buildEventsSection(),
+                DemographicsPage(),
+                AIRecommendationScreen(),
+                EventsPage(),
               ],
             ),
           ],
@@ -86,18 +89,5 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildEventsSection() {
-    return Container(
-      color: Colors.blue.withOpacity(0.3), // Blue content background
-      child: Center(
-        child: Text(
-          'Events Content',
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.white, // White text for visibility
-          ),
-        ),
-      ),
-    );
-  }
+
 }
